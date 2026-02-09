@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="max-w-xl mx-auto bg-white p-8 rounded-xl shadow">
+  <h2 class="text-2xl font-bold mb-6 text-primary text-center">
+    Edit Customer
+  </h2>
+ {% if customer.image %}
+<div class="flex justify-center mb-4">
+  <img src="{{ customer.image.url }}"
+       class="w-24 h-24 rounded-full object-cover shadow">
+</div>
+{% endif %}
+
+  <form method="post" enctype="multipart/form-data" class="space-y-4">
+
+    {% csrf_token %}
+
+    <div>
+      <label class="block text-gray-600 mb-1">Name</label>
+      <input type="text" name="name" value="{{ customer.name }}" required
+        class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary">
+    </div>
+
+    <div>
+      <label class="block text-gray-600 mb-1">Email</label>
+      <input type="email" name="email" value="{{ customer.email }}" required
+        class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary">
+    </div>
+
+    <div>
+      <label class="block text-gray-600 mb-1">Phone</label>
+      <input type="text" name="phone" value="{{ customer.phone }}"
+        class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary">
+    </div>
+
+    <div>
+      <label class="block text-gray-600 mb-1">Status</label>
+      <select name="status"
+        class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary">
+        <option value="lead" {% if customer.status == "lead" %}selected{% endif %}>Lead</option>
+        <option value="contacted" {% if customer.status == "contacted" %}selected{% endif %}>Contacted</option>
+        <option value="converted" {% if customer.status == "converted" %}selected{% endif %}>Converted</option>
+      </select>
+    </div>
+
+    <div>
+  <label class="block text-gray-600 mb-1">Change Profile Image</label>
+  <input type="file" name="image"
+    class="w-full p-2 border rounded-lg">
+</div>
+
+
+    <div>
+      <label class="block text-gray-600 mb-1">Notes</label>
+      <textarea name="notes" rows="3"
+        class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary">{{ customer.notes }}</textarea>
+    </div>
+
+    <button type="submit"
+      class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition">
+      Update Customer
+    </button>
+  </form>
+
+  <div class="text-center mt-6">
+    <a href="/customers/" class="text-primary hover:underline">
+      ⬅ Back to Customers
+    </a>
+  </div>
+</div>
+
+{% endblock %}

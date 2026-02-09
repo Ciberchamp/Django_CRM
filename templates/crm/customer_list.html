@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="flex justify-between items-center mb-6">
+  <h2 class="text-2xl font-semibold text-gray-800">My Customers</h2>
+  <a href="/customers/add/"
+     class="bg-accent text-white px-4 py-2 rounded-lg shadow hover:bg-orange-600 transition">
+     ➕ Add Customer
+  </a>
+</div>
+
+<div class="bg-white rounded-xl shadow overflow-hidden">
+  <table class="w-full text-left">
+    <thead class="bg-gray-50 text-gray-600">
+      <tr>
+        <th class="p-4">Name</th>
+        <th class="p-4">Email</th>
+        <th class="p-4">Phone</th>
+        <th class="p-4">Status</th>
+        <th class="p-4 text-center">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for c in customers %}
+      <tr id="customer-{{ c.id }}" class="border-t hover:bg-gray-50">
+        <td class="p-4 flex items-center space-x-3">
+  {% if c.image %}
+    <img src="{{ c.image.url }}"
+         class="w-10 h-10 rounded-full object-cover">
+  {% else %}
+    <div class="w-10 h-10 rounded-full bg-gray-300"></div>
+  {% endif %}
+
+  <span class="font-medium">{{ c.name }}</span>
+</td>
+
+        <td class="p-4">{{ c.email }}</td>
+        <td class="p-4">{{ c.phone }}</td>
+        <td class="p-4">
+          <span class="px-3 py-1 rounded-full text-sm
+            {% if c.status == 'lead' %} bg-purple-100 text-purple-700
+            {% elif c.status == 'contacted' %} bg-orange-100 text-orange-700
+            {% else %} bg-green-100 text-green-700 {% endif %}">
+            {{ c.status }}
+          </span>
+        </td>
+        <td class="p-4 text-center space-x-3">
+          <a href="/customers/edit/{{ c.id }}/"
+             class="text-primary hover:underline">Edit</a>
+
+          <button
+            hx-post="/customers/delete/{{ c.id }}/"
+            hx-target="#customer-{{ c.id }}"
+            hx-swap="outerHTML"
+            hx-confirm="Delete this customer?"
+            class="text-red-600 hover:underline">
+            Delete
+          </button>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5" class="p-6 text-center text-gray-500">
+          No customers yet
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

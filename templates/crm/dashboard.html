@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- FULL SCREEN VANTA BACKGROUND -->
+<div id="vanta-bg" class="fixed inset-0 -z-10"></div>
+
+<!-- LIGHT OVERLAY FOR READABILITY -->
+<div class="fixed inset-0 bg-white/50 backdrop-blur-[1px] -z-10"></div>
+
+<!-- DASHBOARD CONTENT -->
+<div class="flex flex-col items-center justify-center min-h-[70vh]">
+
+  <!-- Title -->
+  <h1 class="text-3xl font-bold text-gray-800 mb-2 tracking-wide">
+    Dashboard
+  </h1>
+
+  <p class="text-gray-600 mb-10 text-lg">
+    Welcome back,
+    <span class="font-semibold text-primary">
+      {{ request.user.username }}
+    </span>
+  </p>
+
+  <!-- FLOATING CARD -->
+  <a href="/customers/"
+     class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8
+            hover:shadow-2xl hover:-translate-y-1 transition
+            border border-gray-100 group">
+
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="text-xl font-semibold text-gray-800 group-hover:text-primary">
+          View My Customers
+        </h2>
+        <p class="text-gray-500 mt-1">
+          Manage leads, contacts & conversions
+        </p>
+      </div>
+
+      <div class="text-3xl text-accent group-hover:scale-110 transition">
+        ➜
+      </div>
+    </div>
+
+  </a>
+
+</div>
+
+<!-- VANTA INIT -->
+<script>
+  VANTA.NET({
+    el: "#vanta-bg",
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+
+    minHeight: 200.0,
+    minWidth: 200.0,
+
+    scale: 1.0,
+    scaleMobile: 1.0,
+
+    color: 0x6d28d9,          // deep purple
+    backgroundColor: 0xffffff,
+
+    points: 18.0,
+    maxDistance: 32.0,
+    spacing: 14.0
+  });
+</script>
+
+{% endblock %}
